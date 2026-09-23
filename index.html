@@ -70,7 +70,7 @@
 </head>
 <body>
 
-    <!-- Navbar / Meniu -->
+    <!-- Meniu / Navigație principală -->
     <nav class="navbar navbar-expand-lg navbar-custom py-3 mb-4">
         <div class="container-fluid px-4">
             <a class="navbar-brand fw-bold text-danger" href="#">
@@ -81,11 +81,12 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab- sportive"><i class="fa-solid fa-users me-1"></i> Sportive pe Grupe</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-cnp"><i class="fa-solid id-card me-1"></i> Date & CNP</button></li>
+                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-sportive"><i class="fa-solid fa-users me-1"></i> Sportive pe Grupe</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-prezenete"><i class="fa-solid fa-calendar-check me-1"></i> Prezențe & Statistici</button></li>
                     <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-documente"><i class="fa-solid fa-folder-open me-1"></i> Fișe & Certificate</button></li>
-                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-prezenete"><i class="fa-solid fa-calendar-check me-1"></i> Prezențe</button></li>
-                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-program"><i class="fa-solid fa-clock me-1"></i> Program</button></li>
-                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-backup"><i class="fa-solid fa-database me-1"></i> Backup Date</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-legitimatii"><i class="fa-solid fa-id-badge me-1"></i> Legitimații & Vize</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-program"><i class="fa-solid fa-clock me-1"></i> Program Antrenamente</button></li>
                 </ul>
             </div>
         </div>
@@ -94,8 +95,16 @@
     <div class="container-fluid px-4">
         <div class="tab-content" id="pills-tabContent">
 
-            <!-- TAB 1: SPORTIVE PE GRUPE -->
-            <div class="tab-pane fade show active" id="tab- sportive">
+            <!-- TAB: DATE & CNP -->
+            <div class="tab-pane fade" id="tab-cnp">
+                <div class="card p-4">
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-address-card text-danger me-2"></i>Date & CNP Sportive</h5>
+                    <p class="text-muted">Secțiune dedicată datelor de identificare ale sportivelor.</p>
+                </div>
+            </div>
+
+            <!-- TAB: SPORTIVE PE GRUPE -->
+            <div class="tab-pane fade show active" id="tab-sportive">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card p-4 mb-4">
@@ -140,10 +149,18 @@
                 </div>
             </div>
 
-            <!-- TAB 2: FIȘE & CERTIFICATE (TRANSFORMAT ÎN TABEL CU MINIATURI JPG) -->
+            <!-- TAB: PREZENȚE -->
+            <div class="tab-pane fade" id="tab-prezenete">
+                <div class="card p-4">
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-clipboard-user text-danger me-2"></i>Prezențe & Statistici</h5>
+                    <p class="text-muted">Evidența prezențelor la antrenamente.</p>
+                </div>
+            </div>
+
+            <!-- TAB: FIȘE & CERTIFICATE (MODIFICAT ÎN TABEL CU MINIATURI JPG) -->
             <div class="tab-pane fade" id="tab-documente">
                 <div class="card p-4 mb-4">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-file-arrow-up text-danger me-2"></i>Încărcare / Actualizare Documente</h5>
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-file-arrow-up text-danger me-2"></i>Încărcare Documente (Fișă înscriere / Certificat naștere)</h5>
                     <form id="formDocument" class="row g-3 align-items-end">
                         <div class="col-md-4">
                             <label class="form-label">Selectează Sportiva</label>
@@ -152,22 +169,22 @@
                         <div class="col-md-3">
                             <label class="form-label">Tip Document</label>
                             <select class="form-select" id="tipDocument">
-                                <option value="certificat">Certificat de Naștere</option>
-                                <option value="fisa">Fișă de Înscriere</option>
+                                <option value="certificat">Certificat de naștere</option>
+                                <option value="fisa">Fișă înscriere</option>
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">Fișier (JPG / PNG)</label>
+                            <label class="form-label">Alege Fișier (JPG/PNG)</label>
                             <input type="file" class="form-control" id="fileDocument" accept="image/*" required>
                         </div>
                         <div class="col-md-2">
-                            <button type="submit" class="btn btn-danger w-100">Încarcă</button>
+                            <button type="submit" class="btn btn-danger w-100">Salveaza</button>
                         </div>
                     </form>
                 </div>
 
                 <div class="card p-4">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-table text-danger me-2"></i>Centralizator Documente Sportive</h5>
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-table text-danger me-2"></i>Documente Salvate</h5>
                     <div class="table-responsive">
                         <table class="table table-bordered align-middle text-center">
                             <thead class="table-light">
@@ -175,7 +192,6 @@
                                     <th class="text-start">Nume și Prenume (Grupa)</th>
                                     <th>Certificat de Naștere</th>
                                     <th>Fișă de Înscriere</th>
-                                    <th>Acțiuni</th>
                                 </tr>
                             </thead>
                             <tbody id="tabelDocumenteBody">
@@ -186,21 +202,15 @@
                 </div>
             </div>
 
-            <!-- TAB 3: PREZENȚE -->
-            <div class="tab-pane fade" id="tab-prezenete">
+            <!-- TAB: LEGITIMAȚII & VIZE -->
+            <div class="tab-pane fade" id="tab-legitimatii">
                 <div class="card p-4">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-clipboard-user text-danger me-2"></i>Evidență Prezențe Antrenamente</h5>
-                    <p class="text-muted">Alege grupa pentru a marca prezența:</p>
-                    <div class="btn-group mb-3" role="group">
-                        <button type="button" class="btn btn-outline-danger active" onclick="schimbaGrupaPrezenta('Minihandbal')">Minihandbal</button>
-                        <button type="button" class="btn btn-outline-danger" onclick="schimbaGrupaPrezenta('Junioare 4')">Junioare 4</button>
-                        <button type="button" class="btn btn-outline-danger" onclick="schimbaGrupaPrezenta('Junioare 3')">Junioare 3</button>
-                    </div>
-                    <div id="containerPrezenta"></div>
+                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-id-badge text-danger me-2"></i>Legitimatii & Vize</h5>
+                    <p class="text-muted">Gestionare vize medicale și legitimatii.</p>
                 </div>
             </div>
 
-            <!-- TAB 4: PROGRAM -->
+            <!-- TAB: PROGRAM ANTRENAMENTE -->
             <div class="tab-pane fade" id="tab-program">
                 <div class="card p-4">
                     <h5 class="fw-bold mb-3"><i class="fa-solid fa-clock text-danger me-2"></i>Program Antrenamente</h5>
@@ -213,24 +223,6 @@
                             </ul>
                         </li>
                     </ul>
-                </div>
-            </div>
-
-            <!-- TAB 5: BACKUP & SIGURANȚĂ DATE -->
-            <div class="tab-pane fade" id="tab-backup">
-                <div class="card p-4">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-database text-danger me-2"></i>Siguranța Datelor (Backup)</h5>
-                    <p class="text-muted">Pentru a fi 100% sigură că nu pierzi niciodată datele (sportive și documente), poți face un fișier de rezervă pe calculatorul sau telefonul tău înainte de orice actualizare majoră.</p>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <button class="btn btn-success w-100" onclick="exportData()"><i class="fa-solid fa-download me-2"></i>Descarcă Backup Date (JSON)</button>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="btn btn-warning w-100 text-dark mb-0">
-                                <i class="fa-solid fa-upload me-2"></i>Restaurează din Backup <input type="file" id="importFile" hidden onchange="importData(event)">
-                            </label>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -254,12 +246,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Cheie unică fixă ca să nu se piardă datele la actualizări viitoare
         const STORAGE_KEY = "css_dinamo_brasov_data_v1";
 
         let dbData = {
             sportive: [],
-            documente: {} // { idSportiva: { certificat: "base64...", fisa: "base64..." } }
+            documente: {}
         };
 
         function loadData() {
@@ -302,11 +293,11 @@
             }
         }
 
-        // Încărcare document (convertit în miniatură JPG / base64)
+        // Încărcare document (convertit în miniatură JPG)
         document.getElementById('formDocument').addEventListener('submit', function(e) {
             e.preventDefault();
             const idSportiva = document.getElementById('selectSportivaDoc').value;
-            const tipDoc = document.getElementById('tipDocument').value; // 'certificat' sau 'fisa'
+            const tipDoc = document.getElementById('tipDocument').value;
             const fileInput = document.getElementById('fileDocument');
 
             if(!idSportiva || fileInput.files.length === 0) return;
@@ -352,7 +343,6 @@
             selectDoc.innerHTML = '';
 
             dbData.sportive.forEach((s, index) => {
-                // Sportive
                 tbodySportive.innerHTML += `
                     <tr>
                         <td>${index + 1}</td>
@@ -364,28 +354,27 @@
                     </tr>
                 `;
 
-                // Select
                 selectDoc.innerHTML += `<option value="${s.id}">${s.nume} (${s.grupa})</option>`;
             });
 
-            // Randare Tabel Documente (sub formă de tabel cu miniaturi JPG)
+            // Randare Tabel Documente (sub formă de tabel cu miniaturi JPG pe coloane separate)
             const tbodyDocs = document.getElementById('tabelDocumenteBody');
             tbodyDocs.innerHTML = '';
 
             if(dbData.sportive.length === 0) {
-                tbodyDocs.innerHTML = `<tr><td colspan="4" class="text-muted">Nu există sportive înregistrate.</td></tr>`;
+                tbodyDocs.innerHTML = `<tr><td colspan="3" class="text-muted">Nu există sportive înregistrate.</td></tr>`;
             } else {
                 dbData.sportive.forEach(s => {
                     const docs = dbData.documente[s.id] || {};
                     
                     const certHtml = docs.certificat 
                         ? `<img src="${docs.certificat}" class="doc-thumb" onclick="arataImagine('${docs.certificat}', 'Certificat naștere - ${s.nume}')" title="Click pentru mărire">
-                           <br><button class="btn btn-link text-danger btn-sm p-0 mt-1" onclick="stergeDocument('${s.id}', 'certificat')"><small>Șterge</small></button>`
+                           <br><button class="btn btn-link text-danger btn-sm p-0 mt-1" onclick="stergeDocument('${s.id}', 'certificat')"><small>Șterge document</small></button>`
                         : `<span class="no-doc">Lipsă</span>`;
 
                     const fisaHtml = docs.fisa 
                         ? `<img src="${docs.fisa}" class="doc-thumb" onclick="arataImagine('${docs.fisa}', 'Fișă înscriere - ${s.nume}')" title="Click pentru mărire">
-                           <br><button class="btn btn-link text-danger btn-sm p-0 mt-1" onclick="stergeDocument('${s.id}', 'fisa')"><small>Șterge</small></button>`
+                           <br><button class="btn btn-link text-danger btn-sm p-0 mt-1" onclick="stergeDocument('${s.id}', 'fisa')"><small>Șterge document</small></button>`
                         : `<span class="no-doc">Lipsă</span>`;
 
                     tbodyDocs.innerHTML += `
@@ -393,58 +382,12 @@
                             <td class="text-start fw-bold">${s.nume} <br><small class="text-muted fw-normal">${s.grupa}</small></td>
                             <td>${certHtml}</td>
                             <td>${fisaHtml}</td>
-                            <td>
-                                <span class="text-muted small">Gestionare rapidă sus</span>
-                            </td>
                         </tr>
                     `;
                 });
             }
         }
 
-        // Backup Funcții
-        function exportData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dbData));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "backup_css_dinamo_brasov.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        function importData(event) {
-            const fileReader = new FileReader();
-            if(event.target.files[0]) {
-                fileReader.readAsText(event.target.files[0], "UTF-8");
-                fileReader.onload = function(e) {
-                    try {
-                        dbData = JSON.parse(e.target.result);
-                        saveData();
-                        alert('Datele au fost restaurate cu succes din backup!');
-                    } catch(err) {
-                        alert('Eroare la citirea fișierului de backup!');
-                    }
-                }
-            }
-        }
-
-        function schimbaGrupaPrezenta(grupa) {
-            const container = document.getElementById('containerPrezenta');
-            const lista = dbData.sportive.filter(s => s.grupa === grupa);
-            if(lista.length === 0) {
-                container.innerHTML = `<p class="text-muted">Nu sunt sportive în grupa ${grupa}.</p>`;
-                return;
-            }
-            let html = `<ul class="list-group">`;
-            lista.forEach(s => {
-                html += `<li class="list-group-item d-flex justify-content-between align-items-center">${s.nume} <span class="badge bg-primary">Prezentă / Absentă</span></li>`;
-            });
-            html += `</ul>`;
-            container.innerHTML = html;
-        }
-
-        // Inițializare
         loadData();
         renderAll();
     </script>
