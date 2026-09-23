@@ -363,7 +363,7 @@
             if (S === 1 || S === 2) anPrefix = "19";
             else if (S === 3 || S === 4) anPrefix = "18";
             else if (S === 5 || S === 6) anPrefix = "20";
-            else if (S === 7 || S === 8) anPrefix = "19"; // rezident
+            else if (S === 7 || S === 8) anPrefix = "19"; 
             else anPrefix = "20";
 
             const an = anPrefix + cnp.substr(1, 2);
@@ -387,10 +387,9 @@
                     const zi = parseInt(s.cnp.substr(5, 2));
 
                     const dataNesteriiAnuala = new Date(azi.getFullYear(), luna, zi);
-                    const diferenta Zile = Math.ceil((dataNesteriiAnuala - azi) / (1000 * 60 * 60 * 24));
+                    const diferentaZile = Math.ceil((dataNesteriiAnuala - azi) / (1000 * 60 * 60 * 24));
 
                     if (diferentaZile >= 0 && diferentaZile <= 7) {
-                        aniversari.onsuccess = true;
                         aniversari.push(`🎉 <b>${s.nume}</b> împlinește vârsta pe ${zi}.${luna + 1} (în ${diferentaZile === 0 ? 'azi!' : diferentaZile + ' zile'})`);
                     }
                 }
@@ -413,7 +412,7 @@
                 if (prezenteStoc[data] && prezenteStoc[data][sportivaId] !== undefined) {
                     if (prezenteStoc[data][sportivaId]) prezente++;
                 } else {
-                    prezente++; // implicit e true
+                    prezente++; 
                 }
             });
 
