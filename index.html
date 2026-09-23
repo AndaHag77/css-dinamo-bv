@@ -149,8 +149,8 @@
         <div id="tab-prezente" class="hidden space-y-6">
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
-                    <h2 class="text-lg font-bold text-red-700">Evidență Prezență & Procentaje</h2>
-                    <p class="text-xs text-slate-500">Vacanțele școlare sunt excluse automat. Vezi procentul total de prezență pentru fiecare sportivă.</p>
+                    <h2 class="text-lg font-bold text-red-700">Evidență Prezență & Procentaje (Marți & Joi)</h2>
+                    <p class="text-xs text-slate-500">Antrenamentele sunt programate exclusiv marțea și joia. Vacanțele școlare sunt excluse automat.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <label class="text-sm font-medium text-slate-600">Selectează Data Antrenament:</label>
@@ -210,26 +210,20 @@
         <div id="tab-program" class="hidden space-y-6">
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
                 <h2 class="text-lg font-bold mb-2 text-red-700">Program Antrenamente - Sezonul 2026-2027</h2>
-                <p class="text-xs text-slate-500 mb-6">Locație antrenamente: Liceul Teoretic „Mitropolit Ioan Mețianu” – Zărnești</p>
+                <p class="text-xs text-slate-500 mb-6">Locație antrenamente: Sala de sport a Liceului Teoretic „Mitropolit Ioan Mețianu” – Zărnești</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
                         <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Minihandbal</span>
-                        <h4 class="font-bold text-slate-800 text-md mt-3">Luni & Miercuri</h4>
-                        <p class="text-sm text-slate-600 mt-1">🕒 14:00 - 15:30</p>
-                        <p class="text-xs text-slate-400 mt-3">Sala de sport a Liceului Teoretic „Mitropolit Ioan Mețianu”</p>
-                    </div>
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Junioare 4</span>
                         <h4 class="font-bold text-slate-800 text-md mt-3">Marți & Joi</h4>
-                        <p class="text-sm text-slate-600 mt-1">🕒 15:00 - 16:30</p>
-                        <p class="text-xs text-slate-400 mt-3">Sala de sport a Liceului Teoretic „Mitropolit Ioan Mețianu”</p>
+                        <p class="text-sm text-slate-600 mt-1">🕒 18:00 - 19:00</p>
+                        <p class="text-xs text-slate-400 mt-3">Liceul Teoretic „Mitropolit Ioan Mețianu”</p>
                     </div>
                     <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Junioare 3</span>
-                        <h4 class="font-bold text-slate-800 text-md mt-3">Luni, Miercuri & Vineri</h4>
-                        <p class="text-sm text-slate-600 mt-1">🕒 16:30 - 18:30</p>
-                        <p class="text-xs text-slate-400 mt-3">Sala de sport a Liceului Teoretic „Mitropolit Ioan Mețianu”</p>
+                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Junioare 4 & Junioare 3</span>
+                        <h4 class="font-bold text-slate-800 text-md mt-3">Marți & Joi</h4>
+                        <p class="text-sm text-slate-600 mt-1">🕒 19:00 - 20:00</p>
+                        <p class="text-xs text-slate-400 mt-3">Liceul Teoretic „Mitropolit Ioan Mețianu”</p>
                     </div>
                 </div>
             </div>
@@ -339,7 +333,8 @@
                 const eVazPaste = (time >= new Date(2027, 3, 24).getTime() && time <= new Date(2027, 4, 4).getTime());
 
                 const ziSapt = current.getDay();
-                if(ziSapt !== 0 && ziSapt !== 6 && !eVazToamna && !eVazIarna && !eVazPaste) {
+                // Generăm DOAR Marți (ziua 2) și Joi (ziua 4)
+                if((ziSapt === 2 || ziSapt === 4) && !eVazToamna && !eVazIarna && !eVazPaste) {
                     const an = current.getFullYear();
                     const luna = String(current.getMonth() + 1).padStart(2, '0');
                     const zi = String(current.getDate()).padStart(2, '0');
