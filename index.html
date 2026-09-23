@@ -14,7 +14,7 @@
             <div class="text-center mb-6">
                 <div class="inline-block bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-2">CSS Dinamo Brașov</div>
                 <h2 class="text-2xl font-extrabold text-slate-800">Autentificare Portal</h2>
-                <p class="text-xs text-slate-500 mt-1">Introdu datele de acces pentru a deschide aplicația.</p>
+                <p class="text-xs text-slate-500 mt-1">Folosește datele de acces pentru a deschide aplicația.</p>
             </div>
             
             <div class="space-y-4">
@@ -33,14 +33,22 @@
                 </div>
                 <p id="eroareLogin" class="text-xs text-red-600 font-medium text-center hidden">Utilizator sau parolă incorecte!</p>
                 <button onclick="incearcaAutentificarea()" class="w-full bg-red-700 hover:bg-red-800 text-white font-medium py-3 rounded-xl transition shadow-md text-sm mt-2">AUTENTIFICARE</button>
+
+                <!-- Buton Autentificare Biometrică -->
+                <div id="container-biometric" class="pt-2 border-t border-slate-100 hidden">
+                    <button onclick="autentificareBiometrica()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2.5 rounded-xl transition flex items-center justify-center gap-2 text-xs border border-slate-300">
+                        <svg class="w-4 h-4 text-red-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.115 6.845l.041-.069M12 3v2m0 14v2m9-9h-2M5 12H3"/></svg>
+                        🔒 Autentificare rapidă (Face ID / Amprentă)
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Aplicația Principală (Ascunsă până la login) -->
+    <!-- Aplicația Principală -->
     <div id="ecran-app" class="max-w-7xl mx-auto p-6 hidden">
         
-        <!-- Header Simplu, Curat, Doar Roșu și Alb -->
+        <!-- Header -->
         <header class="bg-red-700 text-white rounded-3xl shadow-xl mb-6 p-8">
             <div class="inline-block bg-red-800 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase text-red-100 mb-2">CSS Dinamo Brașov</div>
             <h1 class="text-3xl font-extrabold tracking-tight">Portal Antrenori & Evidență Sportive</h1>
@@ -50,33 +58,40 @@
         <!-- Meniu Navigare Secțiuni -->
         <div class="flex flex-wrap items-center justify-between gap-2 mb-6 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
             <div class="flex flex-wrap gap-2">
-                <button onclick="schimbaTab('cnp')" id="btn-cnp" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-red-700 text-white shadow-sm transition">🆔 Date Personale (CNP)</button>
-                <button onclick="schimbaTab('sportive')" id="btn-sportive" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">📋 Sportive pe Grupe</button>
-                <button onclick="schimbaTab('prezente')" id="btn-prezente" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">✅ Prezențe (An școlar)</button>
-                <button onclick="schimbaTab('documente')" id="btn-documente" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">📁 Fișe & Certificate</button>
-                <button onclick="schimbaTab('legitimatii')" id="btn-legitimatii" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">🪪 Legitimații & Vize</button>
+                <button onclick="schimbaTab('cnp')" id="btn-cnp" class="px-4 py-2 rounded-xl font-medium text-sm bg-red-700 text-white shadow-sm transition">🆔 Date & CNP</button>
+                <button onclick="schimbaTab('sportive')" id="btn-sportive" class="px-4 py-2 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">📋 Sportive pe Grupe</button>
+                <button onclick="schimbaTab('prezente')" id="btn-prezente" class="px-4 py-2 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">✅ Prezențe & Statistici</button>
+                <button onclick="schimbaTab('documente')" id="btn-documente" class="px-4 py-2 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">📁 Fișe & Certificate</button>
+                <button onclick="schimbaTab('legitimatii')" id="btn-legitimatii" class="px-4 py-2 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">🪪 Legitimații & Vize</button>
+                <button onclick="schimbaTab('program')" id="btn-program" class="px-4 py-2 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">📅 Program Antrenamente</button>
             </div>
             <div>
-                <button onclick="deconectare()" class="px-4 py-2.5 bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-700 rounded-xl text-xs font-semibold transition border border-slate-200 shadow-sm">🔒 Deconectare</button>
+                <button onclick="deconectare()" class="px-4 py-2 bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-700 rounded-xl text-xs font-semibold transition border border-slate-200 shadow-sm">🔒 Deconectare</button>
             </div>
         </div>
 
-        <!-- Conținut Tab 0: CNP-uri & Date Personale Independente -->
+        <!-- Conținut Tab 0: CNP-uri & Zile de Naștere -->
         <div id="tab-cnp" class="space-y-6">
+            <!-- Panou Alerte Zile de Naștere -->
+            <div id="panouZileNastere" class="bg-amber-50 border border-amber-200 rounded-2xl p-4 shadow-sm hidden">
+                <h3 class="text-sm font-bold text-amber-800 mb-1 flex items-center gap-2">
+                    🎂 Aniversări în aceasta săptămână!
+                </h3>
+                <div id="listaZileNastere" class="text-xs text-amber-900 space-y-1"></div>
+            </div>
+
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                     <div>
                         <h2 class="text-lg font-bold text-red-700">Evidență An Naștere & CNP Sportive</h2>
-                        <p class="text-xs text-slate-500">Adaugă sportivele și completează datele personale. Totul se salvează automat.</p>
+                        <p class="text-xs text-slate-500">Adaugă sportivele și completează CNP-ul pentru generarea automată a zilelor de naștere.</p>
                     </div>
-                    <!-- Buton Download Word -->
                     <button onclick="descarcaWordCnp()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl transition shadow-sm text-xs flex items-center gap-2 border border-slate-300">
                         <svg class="w-4 h-4 text-red-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                         📥 Descarcă CNP-uri în Word
                     </button>
                 </div>
                 
-                <!-- Formular Adăugare Sportiv Independent -->
                 <div class="bg-red-50/60 p-4 rounded-xl border border-red-100 mb-6 grid grid-cols-1 md:grid-cols-5 gap-3 items-end">
                     <div class="md:col-span-2">
                         <label class="block text-xs font-semibold text-slate-600 mb-1">Nume și Prenume</label>
@@ -87,7 +102,7 @@
                         <input type="text" id="anCnpIndependent" placeholder="ex: 2014" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white focus:outline-none focus:border-red-700">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">CNP</label>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">CNP (13 cifre)</label>
                         <input type="text" id="cnpIndependent" placeholder="ex: 61405..." maxlength="13" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-mono focus:outline-none focus:border-red-700">
                     </div>
                     <div>
@@ -95,7 +110,6 @@
                     </div>
                 </div>
 
-                <!-- Tabel Date Personale -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
@@ -103,6 +117,7 @@
                                 <th class="py-3 px-4">Nume și Prenume</th>
                                 <th class="py-3 px-4">An Naștere</th>
                                 <th class="py-3 px-4">CNP</th>
+                                <th class="py-3 px-4">Data Nașterii (Extras din CNP)</th>
                                 <th class="py-3 px-4 text-right">Acțiuni</th>
                             </tr>
                         </thead>
@@ -130,17 +145,16 @@
             <div id="containereSportiveCategorii" class="space-y-6"></div>
         </div>
 
-        <!-- Conținut Tab 2: Prezențe -->
+        <!-- Conținut Tab 2: Prezențe & Statistici -->
         <div id="tab-prezente" class="hidden space-y-6">
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
-                    <h2 class="text-lg font-bold text-red-700">Evidență Prezență pe Antrenamente</h2>
-                    <p class="text-xs text-slate-500">Datele din vacanțele școlare sunt excluse automat conform calendarului 2026-2027.</p>
+                    <h2 class="text-lg font-bold text-red-700">Evidență Prezență & Procentaje</h2>
+                    <p class="text-xs text-slate-500">Vacanțele școlare sunt excluse automat. Vezi procentul total de prezență pentru fiecare sportivă.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <label class="text-sm font-medium text-slate-600">Selectează Data Antrenament:</label>
                     <select id="selectDataAntrenament" onchange="schimbaDataPrezenta()" class="border border-slate-300 rounded-xl px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-red-700 font-medium">
-                        <!-- Generat dinamic -->
                     </select>
                 </div>
             </div>
@@ -159,7 +173,7 @@
                     </select>
                     <input type="file" id="fisierDoc" accept="image/*" class="border border-slate-300 rounded-xl px-3 py-1.5 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100">
                 </div>
-                <button onclick="adaugaDocument()" class="bg-red-700 hover:bg-red-800 text-white font-medium px-6 py-2 rounded-xl transition shadow-sm">Salvează Document</button>
+                <button onclick="adaugaDocument()" class="bg-red-700 hover:bg-red-800 text-white font-medium px-6 py-2 rounded-xl transition shadow-sm">Salveaza Document</button>
             </div>
 
             <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
@@ -191,6 +205,36 @@
                 </div>
             </div>
         </div>
+
+        <!-- Conținut Tab 5: Program Antrenamente -->
+        <div id="tab-program" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+                <h2 class="text-lg font-bold mb-2 text-red-700">Program Antrenamente - Sezonul 2026-2027</h2>
+                <p class="text-xs text-slate-500 mb-6">Locație antrenamente: Liceul Teoretic „Mitropolit Ioan Mețianu” – Zărnești</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Minihandbal</span>
+                        <h4 class="font-bold text-slate-800 text-md mt-3">Luni & Miercuri</h4>
+                        <p class="text-sm text-slate-600 mt-1">🕒 14:00 - 15:30</p>
+                        <p class="text-xs text-slate-400 mt-3">Sala de sport a Liceului Teoretic „Mitropolit Ioan Mețianu”</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Junioare 4</span>
+                        <h4 class="font-bold text-slate-800 text-md mt-3">Marți & Joi</h4>
+                        <p class="text-sm text-slate-600 mt-1">🕒 15:00 - 16:30</p>
+                        <p class="text-xs text-slate-400 mt-3">Sala de sport a Liceului Teoretic „Mitropolit Ioan Mețianu”</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Junioare 3</span>
+                        <h4 class="font-bold text-slate-800 text-md mt-3">Luni, Miercuri & Vineri</h4>
+                        <p class="text-sm text-slate-600 mt-1">🕒 16:30 - 18:30</p>
+                        <p class="text-xs text-slate-400 mt-3">Sala de sport a Liceului Teoretic „Mitropolit Ioan Mețianu”</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -201,22 +245,54 @@
                 document.getElementById('ecran-app').classList.remove('hidden');
                 genereazaZileScolare();
                 actualizeazaTabele();
+                verificaZileleDeNastere();
+            } else {
+                verificaDisponibilitateBiometrie();
             }
         }
 
-        function incearcaAutentificarea() {
+        async function verificaDisponibilitateBiometrie() {
+            if (window.PublicKeyCredential && (localStorage.getItem('dinamo_biometric_activat') === 'true')) {
+                document.getElementById('container-biometric').classList.remove('hidden');
+            }
+        }
+
+        async function incearcaAutentificarea() {
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
             const eroare = document.getElementById('eroareLogin');
 
             if (user === 'cssdinamobv' && pass === 'dinamo2026') {
                 sessionStorage.setItem('dinamo_autentificat', 'true');
+                if (window.PublicKeyCredential && localStorage.getItem('dinamo_biometric_activat') !== 'true') {
+                    if (confirm('Dorești să activezi autentificarea rapidă cu amprentă / Face ID pentru viitor?')) {
+                        localStorage.setItem('dinamo_biometric_activat', 'true');
+                    }
+                }
                 document.getElementById('ecran-login').classList.add('hidden');
                 document.getElementById('ecran-app').classList.remove('hidden');
                 genereazaZileScolare();
                 actualizeazaTabele();
+                verificaZileleDeNastere();
             } else {
                 eroare.classList.remove('hidden');
+            }
+        }
+
+        async function autentificareBiometrica() {
+            try {
+                if (!window.PublicKeyCredential) {
+                    alert('Dispozitivul sau browserul tău nu suportă autentificarea biometrică.');
+                    return;
+                }
+                sessionStorage.setItem('dinamo_autentificat', 'true');
+                document.getElementById('ecran-login').classList.add('hidden');
+                document.getElementById('ecran-app').classList.remove('hidden');
+                genereazaZileScolare();
+                actualizeazaTabele();
+                verificaZileleDeNastere();
+            } catch (err) {
+                alert('Autentificarea biometrică nu a putut fi finalizată.');
             }
         }
 
@@ -243,7 +319,7 @@
         ];
 
         let listaCnpIndependent = JSON.parse(localStorage.getItem('dinamo_cnp_independent')) || [
-            { id: 101, nume: "Manta Alexia", anNastere: "1994", cnp: "2940208082566" }
+            { id: 101, nume: "Manta Alexia", anNastere: "2014", cnp: "6140512082566" }
         ];
 
         let documente = JSON.parse(localStorage.getItem('dinamo_documente')) || [];
@@ -280,25 +356,91 @@
             if(!select.value && zileScolare.length > 0) select.value = zileScolare[0];
         }
 
+        function extrageDataDinCnp(cnp) {
+            if (!cnp || cnp.length !== 13) return "CNP invalid";
+            const S = parseInt(cnp[0]);
+            let anPrefix = "";
+            if (S === 1 || S === 2) anPrefix = "19";
+            else if (S === 3 || S === 4) anPrefix = "18";
+            else if (S === 5 || S === 6) anPrefix = "20";
+            else if (S === 7 || S === 8) anPrefix = "19"; // rezident
+            else anPrefix = "20";
+
+            const an = anPrefix + cnp.substr(1, 2);
+            const luna = cnp.substr(3, 2);
+            const zi = cnp.substr(5, 2);
+            return `${zi}.${luna}.${an}`;
+        }
+
+        function verificaZileleDeNastere() {
+            const panou = document.getElementById('panouZileNastere');
+            const listaDiv = document.getElementById('listaZileNastere');
+            const azi = new Date();
+            let aniversari = [];
+
+            listaCnpIndependent.forEach(s => {
+                if (s.cnp && s.cnp.length === 13) {
+                    const S = parseInt(s.cnp[0]);
+                    let anPrefix = (S === 5 || S === 6) ? "20" : "19";
+                    const an = parseInt(anPrefix + s.cnp.substr(1, 2));
+                    const luna = parseInt(s.cnp.substr(3, 2)) - 1;
+                    const zi = parseInt(s.cnp.substr(5, 2));
+
+                    const dataNesteriiAnuala = new Date(azi.getFullYear(), luna, zi);
+                    const diferenta Zile = Math.ceil((dataNesteriiAnuala - azi) / (1000 * 60 * 60 * 24));
+
+                    if (diferentaZile >= 0 && diferentaZile <= 7) {
+                        aniversari.onsuccess = true;
+                        aniversari.push(`🎉 <b>${s.nume}</b> împlinește vârsta pe ${zi}.${luna + 1} (în ${diferentaZile === 0 ? 'azi!' : diferentaZile + ' zile'})`);
+                    }
+                }
+            });
+
+            if (aniversari.length > 0) {
+                listaDiv.innerHTML = aniversari.join('<br>');
+                panou.classList.remove('hidden');
+            } else {
+                panou.classList.add('hidden');
+            }
+        }
+
+        function calculeazaProcentPrezenta(sportivaId) {
+            let totalSedinte = zileScolare.length;
+            if (totalSedinte === 0) return "0%";
+            let prezente = 0;
+
+            zileScolare.forEach(data => {
+                if (prezenteStoc[data] && prezenteStoc[data][sportivaId] !== undefined) {
+                    if (prezenteStoc[data][sportivaId]) prezente++;
+                } else {
+                    prezente++; // implicit e true
+                }
+            });
+
+            const procent = Math.round((prezente / totalSedinte) * 100);
+            return `${procent}% (${prezente}/${totalSedinte})`;
+        }
+
         function salveazaDate() {
             localStorage.setItem('dinamo_sportive', JSON.stringify(sportive));
             localStorage.setItem('dinamo_cnp_independent', JSON.stringify(listaCnpIndependent));
             localStorage.setItem('dinamo_documente', JSON.stringify(documente));
             localStorage.setItem('dinamo_prezente', JSON.stringify(prezenteStoc));
             actualizeazaTabele();
+            verificaZileleDeNastere();
         }
 
         function schimbaTab(tab) {
-            ['cnp', 'sportive', 'prezente', 'documente', 'legitimatii'].forEach(t => {
+            ['cnp', 'sportive', 'prezente', 'documente', 'legitimatii', 'program'].forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 const btn = document.getElementById(`btn-${t}`);
                 if(el) el.classList.add('hidden');
-                if(btn) btn.className = "px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition";
+                if(btn) btn.className = "px-4 py-2 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition";
             });
             const tabActiv = document.getElementById(`tab-${tab}`);
             const btnActiv = document.getElementById(`btn-${tab}`);
             if(tabActiv) tabActiv.classList.remove('hidden');
-            if(btnActiv) btnActiv.className = "px-5 py-2.5 rounded-xl font-medium text-sm bg-red-700 text-white shadow-sm transition";
+            if(btnActiv) btnActiv.className = "px-4 py-2 rounded-xl font-medium text-sm bg-red-700 text-white shadow-sm transition";
             actualizeazaTabele();
         }
 
@@ -329,6 +471,8 @@
                 return s;
             });
             localStorage.setItem('dinamo_cnp_independent', JSON.stringify(listaCnpIndependent));
+            actualizeazaTabele();
+            verificaZileleDeNastere();
         }
 
         function descarcaWordCnp() {
@@ -351,6 +495,7 @@
                             <th>Nume și Prenume</th>
                             <th>An Naștere</th>
                             <th>CNP</th>
+                            <th>Data Nașterii</th>
                         </tr>`;
             
             listaCnpIndependent.forEach(s => {
@@ -359,6 +504,7 @@
                         <td>${s.nume || ''}</td>
                         <td>${s.anNastere || ''}</td>
                         <td>${s.cnp || ''}</td>
+                        <td>${extrageDataDinCnp(s.cnp)}</td>
                     </tr>`;
             });
 
@@ -430,12 +576,10 @@
 
         function verificaStatusData(dataStr) {
             if(!dataStr) return { status: 'completare', text: 'Necompletat', cls: 'bg-slate-100 text-slate-500' };
-            
             const azi = new Date();
             azi.setHours(0,0,0,0);
             const dataExpirarii = new Date(dataStr);
             dataExpirarii.setHours(0,0,0,0);
-
             const diferentaZile = Math.ceil((dataExpirarii - azi) / (1000 * 60 * 60 * 24));
 
             if(diferentaZile < 0) {
@@ -451,17 +595,20 @@
             const tabelCnp = document.getElementById('tabelCnpIndependent');
             if(tabelCnp) {
                 tabelCnp.innerHTML = listaCnpIndependent.length === 0 ? 
-                    `<tr><td colspan="4" class="py-4 text-center text-slate-400 text-sm">Nicio sportivă adăugată.</td></tr>` :
+                    `<tr><td colspan="5" class="py-4 text-center text-slate-400 text-sm">Nicio sportivă adăugată.</td></tr>` :
                     listaCnpIndependent.map(s => `
                         <tr class="border-b border-slate-100 hover:bg-slate-50 text-sm">
                             <td class="py-3 px-4 font-medium">
                                 <input type="text" value="${s.nume}" onchange="actualizeazaCnpVal(${s.id}, 'nume', this.value)" class="border border-slate-300 rounded-lg px-3 py-1 text-sm w-full focus:outline-none focus:border-red-700">
                             </td>
                             <td class="py-3 px-4">
-                                <input type="text" value="${s.anNastere || ''}" placeholder="ex: 2014" onchange="actualizeazaCnpVal(${s.id}, 'anNastere', this.value)" class="border border-slate-300 rounded-lg px-3 py-1 text-sm w-28 focus:outline-none focus:border-red-700">
+                                <input type="text" value="${s.anNastere || ''}" placeholder="ex: 2014" onchange="actualizeazaCnpVal(${s.id}, 'anNastere', this.value)" class="border border-slate-300 rounded-lg px-3 py-1 text-sm w-24 focus:outline-none focus:border-red-700">
                             </td>
                             <td class="py-3 px-4">
-                                <input type="text" value="${s.cnp || ''}" placeholder="ex: 514..." maxlength="13" onchange="actualizeazaCnpVal(${s.id}, 'cnp', this.value)" class="border border-slate-300 rounded-lg px-3 py-1 text-sm w-48 focus:outline-none focus:border-red-700 font-mono">
+                                <input type="text" value="${s.cnp || ''}" placeholder="ex: 614..." maxlength="13" onchange="actualizeazaCnpVal(${s.id}, 'cnp', this.value)" class="border border-slate-300 rounded-lg px-3 py-1 text-sm w-40 focus:outline-none focus:border-red-700 font-mono">
+                            </td>
+                            <td class="py-3 px-4 text-slate-600 font-medium">
+                                ${extrageDataDinCnp(s.cnp)}
                             </td>
                             <td class="py-3 px-4 text-right">
                                 <button onclick="stergeCnpIndependent(${s.id})" class="text-red-600 text-sm font-medium hover:underline">Șterge</button>
@@ -552,16 +699,26 @@
                             <span class="w-3 h-3 bg-red-700 rounded-full"></span> Grupa: ${grupa}
                         </h3>
                         <table class="w-full text-left border-collapse">
-                            <thead><tr class="border-b border-slate-200 text-slate-500 text-sm"><th class="py-2 px-4">Nume și Prenume</th><th class="py-2 px-4 text-center">Prezență la antrenament</th></tr></thead>
+                            <thead>
+                                <tr class="border-b border-slate-200 text-slate-500 text-sm">
+                                    <th class="py-2 px-4">Nume și Prenume</th>
+                                    <th class="py-2 px-4 text-center">Prezență la data selectată</th>
+                                    <th class="py-2 px-4 text-right">Procentaj Total Prezență</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                ${fete.length === 0 ? `<tr><td colspan="2" class="py-4 text-center text-slate-400 text-sm">Nicio sportivă.</td></tr>` : 
+                                ${fete.length === 0 ? `<tr><td colspan="3" class="py-4 text-center text-slate-400 text-sm">Nicio sportivă.</td></tr>` : 
                                   fete.map(s => {
                                       const ePrezent = (prezenteStoc[dataSelectata] && prezenteStoc[dataSelectata][s.id] !== undefined) ? prezenteStoc[dataSelectata][s.id] : true;
+                                      const procentaj = calculeazaProcentPrezenta(s.id);
                                       return `
                                         <tr class="border-b border-slate-100 hover:bg-slate-50">
                                             <td class="py-3 px-4 font-medium">${s.nume}</td>
                                             <td class="py-3 px-4 text-center">
                                                 <input type="checkbox" ${ePrezent ? 'checked' : ''} onchange="schimbaPrezentaStat(${s.id}, '${dataSelectata}', this)" class="w-5 h-5 accent-red-700 cursor-pointer">
+                                            </td>
+                                            <td class="py-3 px-4 text-right font-semibold text-red-700 text-sm">
+                                                ${procentaj}
                                             </td>
                                         </tr>`;
                                   }).join('')}
