@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Dinamo Brașov - Portal Antrenori</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
+
+    <!-- Ecran de Autentificare (Login) -->
+    <div id="ecran-login" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-100">
+            <div class="text-center mb-6">
+                <div class="inline-block bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-2">CSS Dinamo Brașov</div>
+                <h2 class="text-2xl font-extrabold text-slate-800">Autentificare Portal</h2>
+                <p class="text-xs text-slate-500 mt-1">Introdu datele de acces pentru a deschide aplicația.</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Utilizator</label>
+                    <input type="text" id="loginUser" placeholder="Introdu utilizatorul" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-red-700">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Parolă</label>
+                    <div class="relative">
+                        <input type="password" id="loginPass" placeholder="Introdu parola" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm pr-12 focus:outline-none focus:border-red-700">
+                        <button type="button" onclick="comutaAfisareParola()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-semibold">
+                            <span id="textToggleParola">Arată</span>
+                        </button>
+                    </div>
+                </div>
+                <p id="eroareLogin" class="text-xs text-red-600 font-medium text-center hidden">Utilizator sau parolă incorecte!</p>
+                <button onclick="incearcaAutentificarea()" class="w-full bg-red-700 hover:bg-red-800 text-white font-medium py-3 rounded-xl transition shadow-md text-sm mt-2">AUTENTIFICARE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aplicația Principală (Ascunsă până la login) -->
+    <div id="ecran-app" class="max-w-7xl mx-auto p-6 hidden">
+        
+        <!-- Header Simplu, Curat, Doar Roșu și Alb -->
+        <header class="bg-red-700 text-white rounded-3xl shadow-xl mb-6 p-8">
+            <div class="inline-block bg-red-800 px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase text-red-100 mb-2">CSS Dinamo Brașov</div>
+            <h1 class="text-3xl font-extrabold tracking-tight">Portal Antrenori & Evidență Sportive</h1>
+            <p class="text-red-100 text-sm font-medium mt-1">Liceul Teoretic „Mitropolit Ioan Mețianu” – Zărnești</p>
+        </header>
+
+        <!-- Meniu Navigare Secțiuni -->
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-6 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex flex-wrap gap-2">
+                <button onclick="schimbaTab('cnp')" id="btn-cnp" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-red-700 text-white shadow-sm transition">🆔 Date Personale (CNP)</button>
+                <button onclick="schimbaTab('sportive')" id="btn-sportive" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">📋 Sportive pe Grupe</button>
+                <button onclick="schimbaTab('prezente')" id="btn-prezente" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">✅ Prezențe (An școlar)</button>
+                <button onclick="schimbaTab('documente')" id="btn-documente" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">📁 Fișe & Certificate</button>
+                <button onclick="schimbaTab('legitimatii')" id="btn-legitimatii" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition">🪪 Legitimații & Vize</button>
+            </div>
+            <div>
+                <button onclick="deconectare()" class="px-4 py-2.5 bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-700 rounded-xl text-xs font-semibold transition border border-slate-200 shadow-sm">🔒 Deconectare</button>
+            </div>
+        </div>
+
+        <!-- Conținut Tab 0: CNP-uri & Date Personale Independente -->
+        <div id="tab-cnp" class="space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-lg font-bold text-red-700">Evidență An Naștere & CNP Sportive</h2>
+                        <p class="text-xs text-slate-500">Adaugă sportivele și completează datele personale. Totul se salvează automat.</p>
+                    </div>
+                    <!-- Buton Download Word -->
+                    <button onclick="descarcaWordCnp()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl transition shadow-sm text-xs flex items-center gap-2 border border-slate-300">
+                        <svg class="w-4 h-4 text-red-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        📥 Descarcă CNP-uri în Word
+                    </button>
+                </div>
+                
+                <!-- Formular Adăugare Sportiv Independent -->
+                <div class="bg-red-50/60 p-4 rounded-xl border border-red-100 mb-6 grid grid-cols-1 md:grid-cols-5 gap-3 items-end">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nume și Prenume</label>
+                        <input type="text" id="numeCnpIndependent" placeholder="ex: Popescu Maria" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white focus:outline-none focus:border-red-700">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">An Naștere</label>
+                        <input type="text" id="anCnpIndependent" placeholder="ex: 2014" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white focus:outline-none focus:border-red-700">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">CNP</label>
+                        <input type="text" id="cnpIndependent" placeholder="ex: 61405..." maxlength="13" class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-mono focus:outline-none focus:border-red-700">
+                    </div>
+                    <div>
+                        <button onclick="adaugaCnpIndependent()" class="w-full bg-red-700 hover:bg-red-800 text-white font-medium px-4 py-2 rounded-xl transition shadow-sm text-sm">+ ADAUGĂ SPORTIV</button>
+                    </div>
+                </div>
+
+                <!-- Tabel Date Personale -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-slate-500 text-xs">
+                                <th class="py-3 px-4">Nume și Prenume</th>
+                                <th class="py-3 px-4">An Naștere</th>
+                                <th class="py-3 px-4">CNP</th>
+                                <th class="py-3 px-4 text-right">Acțiuni</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelCnpIndependent"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conținut Tab 1: Sportive -->
+        <div id="tab-sportive" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+                <h2 class="text-lg font-bold mb-4 text-red-700">Adaugă Sportivă Nouă</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="text" id="numeSportiva" placeholder="Nume și Prenume" class="border border-slate-300 rounded-xl px-4 py-2 focus:outline-none focus:border-red-700">
+                    <select id="grupaSportiva" class="border border-slate-300 rounded-xl px-4 py-2 focus:outline-none focus:border-red-700">
+                        <option value="Minihandbal">Minihandbal</option>
+                        <option value="Junioare 4">Junioare 4</option>
+                        <option value="Junioare 3">Junioare 3</option>
+                    </select>
+                    <button onclick="adaugaSportiva()" class="bg-red-700 hover:bg-red-800 text-white font-medium px-6 py-2 rounded-xl transition shadow-sm">Adaugă în listă</button>
+                </div>
+            </div>
+
+            <div id="containereSportiveCategorii" class="space-y-6"></div>
+        </div>
+
+        <!-- Conținut Tab 2: Prezențe -->
+        <div id="tab-prezente" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-red-700">Evidență Prezență pe Antrenamente</h2>
+                    <p class="text-xs text-slate-500">Datele din vacanțele școlare sunt excluse automat conform calendarului 2026-2027.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label class="text-sm font-medium text-slate-600">Selectează Data Antrenament:</label>
+                    <select id="selectDataAntrenament" onchange="schimbaDataPrezenta()" class="border border-slate-300 rounded-xl px-4 py-2 text-sm bg-slate-50 focus:outline-none focus:border-red-700 font-medium">
+                        <!-- Generat dinamic -->
+                    </select>
+                </div>
+            </div>
+            <div id="containerePrezenteCategorii" class="space-y-6"></div>
+        </div>
+
+        <!-- Conținut Tab 3: Fișe & Certificate -->
+        <div id="tab-documente" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+                <h2 class="text-lg font-bold mb-4 text-red-700">Încărcare Documente (Fișă înscriere / Certificat naștere)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <select id="selectSportivaDoc" class="border border-slate-300 rounded-xl px-4 py-2 focus:outline-none focus:border-red-700"></select>
+                    <select id="tipDocument" class="border border-slate-300 rounded-xl px-4 py-2 focus:outline-none focus:border-red-700">
+                        <option value="Fișă înscriere">Fișă înscriere</option>
+                        <option value="Certificat naștere">Certificat naștere</option>
+                    </select>
+                    <input type="file" id="fisierDoc" accept="image/*" class="border border-slate-300 rounded-xl px-3 py-1.5 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100">
+                </div>
+                <button onclick="adaugaDocument()" class="bg-red-700 hover:bg-red-800 text-white font-medium px-6 py-2 rounded-xl transition shadow-sm">Salvează Document</button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+                <h2 class="text-lg font-bold mb-4 text-slate-700">Documente Salvate</h2>
+                <div id="listaDocumente" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+        </div>
+
+        <!-- Conținut Tab 4: Legitimații -->
+        <div id="tab-legitimatii" class="hidden space-y-6">
+            <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+                <h2 class="text-lg font-bold mb-2 text-red-700">Evidență Legitimații & Vize</h2>
+                <p class="text-xs text-slate-500 mb-4">Sistemul te va atenționa automat dacă viza anuală sau cea medicală expiră în următoarele 7 zile.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-slate-500 text-xs">
+                                <th class="py-3 px-3">Nume și Prenume</th>
+                                <th class="py-3 px-3">Grupa</th>
+                                <th class="py-3 px-3">Seria Legitimație</th>
+                                <th class="py-3 px-3">Data Emiterii</th>
+                                <th class="py-3 px-3">Data Viză Anuală</th>
+                                <th class="py-3 px-3">Data Viză Medicală</th>
+                                <th class="py-3 px-3">Status / Alerte</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelLegitimatii"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function verificaAutentificareaLaPornire() {
+            const esteAutentificat = sessionStorage.getItem('dinamo_autentificat');
+            if (esteAutentificat === 'true') {
+                document.getElementById('ecran-login').classList.add('hidden');
+                document.getElementById('ecran-app').classList.remove('hidden');
+                genereazaZileScolare();
+                actualizeazaTabele();
+            }
+        }
+
+        function incearcaAutentificarea() {
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            const eroare = document.getElementById('eroareLogin');
+
+            if (user === 'cssdinamobv' && pass === 'dinamo2026') {
+                sessionStorage.setItem('dinamo_autentificat', 'true');
+                document.getElementById('ecran-login').classList.add('hidden');
+                document.getElementById('ecran-app').classList.remove('hidden');
+                genereazaZileScolare();
+                actualizeazaTabele();
+            } else {
+                eroare.classList.remove('hidden');
+            }
+        }
+
+        function comutaAfisareParola() {
+            const inputPass = document.getElementById('loginPass');
+            const textToggle = document.getElementById('textToggleParola');
+            if (inputPass.type === 'password') {
+                inputPass.type = 'text';
+                textToggle.textContent = 'Ascunde';
+            } else {
+                inputPass.type = 'password';
+                textToggle.textContent = 'Arată';
+            }
+        }
+
+        function deconectare() {
+            sessionStorage.removeItem('dinamo_autentificat');
+            location.reload();
+        }
+
+        let sportive = JSON.parse(localStorage.getItem('dinamo_sportive')) || [
+            { id: 1, nume: "Popescu Maria", grupa: "Junioare 4", serie: "", dataEmitere: "", vizaAnuala: "", vizaMedicala: "" },
+            { id: 2, nume: "Ionescu Ana", grupa: "Minihandbal", serie: "", dataEmitere: "", vizaAnuala: "", vizaMedicala: "" }
+        ];
+
+        let listaCnpIndependent = JSON.parse(localStorage.getItem('dinamo_cnp_independent')) || [
+            { id: 101, nume: "Manta Alexia", anNastere: "1994", cnp: "2940208082566" }
+        ];
+
+        let documente = JSON.parse(localStorage.getItem('dinamo_documente')) || [];
+        let prezenteStoc = JSON.parse(localStorage.getItem('dinamo_prezente')) || {};
+        const grupeDisponibile = ["Minihandbal", "Junioare 4", "Junioare 3"];
+
+        let zileScolare = [];
+        function genereazaZileScolare() {
+            const start = new Date(2026, 8, 7); // 7 Septembrie 2026
+            const end = new Date(2027, 5, 18);   // 18 Iunie 2027
+            
+            let current = new Date(start);
+            while(current <= end) {
+                const time = current.getTime();
+                const eVazToamna = (time >= new Date(2026, 9, 24).getTime() && time <= new Date(2026, 10, 1).getTime());
+                const eVazIarna = (time >= new Date(2026, 11, 23).getTime() && time <= new Date(2027, 0, 10).getTime());
+                const eVazPaste = (time >= new Date(2027, 3, 24).getTime() && time <= new Date(2027, 4, 4).getTime());
+
+                const ziSapt = current.getDay();
+                if(ziSapt !== 0 && ziSapt !== 6 && !eVazToamna && !eVazIarna && !eVazPaste) {
+                    const an = current.getFullYear();
+                    const luna = String(current.getMonth() + 1).padStart(2, '0');
+                    const zi = String(current.getDate()).padStart(2, '0');
+                    zileScolare.push(`${an}-${luna}-${zi}`);
+                }
+                current.setDate(current.getDate() + 1);
+            }
+
+            const select = document.getElementById('selectDataAntrenament');
+            if(!select) return;
+            const aziStr = new Date().toISOString().split('T')[0];
+            
+            select.innerHTML = zileScolare.map(z => `<option value="${z}" ${z === aziStr ? 'selected' : ''}>Antrenament: ${z}</option>`).join('');
+            if(!select.value && zileScolare.length > 0) select.value = zileScolare[0];
+        }
+
+        function salveazaDate() {
+            localStorage.setItem('dinamo_sportive', JSON.stringify(sportive));
+            localStorage.setItem('dinamo_cnp_independent', JSON.stringify(listaCnpIndependent));
+            localStorage.setItem('dinamo_documente', JSON.stringify(documente));
+            localStorage.setItem('dinamo_prezente', JSON.stringify(prezenteStoc));
+            actualizeazaTabele();
+        }
+
+        function schimbaTab(tab) {
+            ['cnp', 'sportive', 'prezente', 'documente', 'legitimatii'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`btn-${t}`);
+                if(el) el.classList.add('hidden');
+                if(btn) btn.className = "px-5 py-2.5 rounded-xl font-medium text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 shadow-sm transition";
+            });
+            const tabActiv = document.getElementById(`tab-${tab}`);
+            const btnActiv = document.getElementById(`btn-${tab}`);
+            if(tabActiv) tabActiv.classList.remove('hidden');
+            if(btnActiv) btnActiv.className = "px-5 py-2.5 rounded-xl font-medium text-sm bg-red-700 text-white shadow-sm transition";
+            actualizeazaTabele();
+        }
+
+        function adaugaCnpIndependent() {
+            const nume = document.getElementById('numeCnpIndependent').value.trim();
+            const anNastere = document.getElementById('anCnpIndependent').value.trim();
+            const cnp = document.getElementById('cnpIndependent').value.trim();
+
+            if(!nume) { alert('Introdu numele sportivei!'); return; }
+            
+            listaCnpIndependent.push({ id: Date.now(), nume, anNastere, cnp });
+            
+            document.getElementById('numeCnpIndependent').value = '';
+            document.getElementById('anCnpIndependent').value = '';
+            document.getElementById('cnpIndependent').value = '';
+            
+            salveazaDate();
+        }
+
+        function stergeCnpIndependent(id) {
+            listaCnpIndependent = listaCnpIndependent.filter(s => s.id !== id);
+            salveazaDate();
+        }
+
+        function actualizeazaCnpVal(id, camp, valoare) {
+            listaCnpIndependent = listaCnpIndependent.map(s => {
+                if(s.id === id) { s[camp] = valoare; }
+                return s;
+            });
+            localStorage.setItem('dinamo_cnp_independent', JSON.stringify(listaCnpIndependent));
+        }
+
+        function descarcaWordCnp() {
+            let continutHtml = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head><meta charset='utf-8'><title>Evidență CNP Sportive</title>
+                <style>
+                    body { font-family: 'Arial', sans-serif; color: #333; }
+                    h2 { color: #b91c1c; text-align: center; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                    th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-size: 14px; }
+                    th { background-color: #b91c1c; color: white; }
+                </style>
+                </head>
+                <body>
+                    <h2>CSS Dinamo Brașov - Evidență An Naștere & CNP Sportive</h2>
+                    <p><b>Liceul Teoretic „Mitropolit Ioan Mețianu” – Zărnești</b></p>
+                    <table>
+                        <tr>
+                            <th>Nume și Prenume</th>
+                            <th>An Naștere</th>
+                            <th>CNP</th>
+                        </tr>`;
+            
+            listaCnpIndependent.forEach(s => {
+                continutHtml += `
+                    <tr>
+                        <td>${s.nume || ''}</td>
+                        <td>${s.anNastere || ''}</td>
+                        <td>${s.cnp || ''}</td>
+                    </tr>`;
+            });
+
+            continutHtml += `</table></body></html>`;
+
+            const blob = new Blob(['\ufeff' + continutHtml], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Evidenta_CNP_Sportive_Dinamo.doc';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function adaugaSportiva() {
+            const nume = document.getElementById('numeSportiva').value.trim();
+            const grupa = document.getElementById('grupaSportiva').value;
+            if(!nume) { alert('Introdu numele sportivei!'); return; }
+            sportive.push({ id: Date.now(), nume, grupa, serie: '', dataEmitere: '', vizaAnuala: '', vizaMedicala: '' });
+            document.getElementById('numeSportiva').value = '';
+            salveazaDate();
+        }
+
+        function stergeSportiva(id) {
+            sportive = sportive.filter(s => s.id !== id);
+            salveazaDate();
+        }
+
+        function adaugaDocument() {
+            const sportivaId = document.getElementById('selectSportivaDoc').value;
+            const tip = document.getElementById('tipDocument').value;
+            const fileInput = document.getElementById('fisierDoc');
+            
+            if(!sportivaId || fileInput.files.length === 0) { alert('Selectează sportiva și fișierul!'); return; }
+            const sportiva = sportive.find(s => s.id == sportivaId);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                documente.push({ id: Date.now(), numeSportiva: sportiva ? sportiva.nume : 'Necunoscut', tip, imagine: e.target.result });
+                fileInput.value = '';
+                salveazaDate();
+                alert('Document salvat!');
+            }
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+
+        function stergeDocument(id) {
+            documente = documente.filter(d => d.id !== id);
+            salveazaDate();
+        }
+
+        function schimbaPrezentaStat(sportivaId, dataAntrenament, element) {
+            if(!prezenteStoc[dataAntrenament]) prezenteStoc[dataAntrenament] = {};
+            prezenteStoc[dataAntrenament][sportivaId] = element.checked;
+            salveazaDate();
+        }
+
+        function schimbaDataPrezenta() {
+            actualizeazaTabelePrezente();
+        }
+
+        function actualizeazaSportivaVal(id, camp, valoare) {
+            sportive = sportive.map(s => {
+                if(s.id === id) { s[camp] = valoare; }
+                return s;
+            });
+            localStorage.setItem('dinamo_sportive', JSON.stringify(sportive));
+        }
+
+        function verificaStatusData(dataStr) {
+            if(!dataStr) return { status: 'completare', text: 'Necompletat', cls: 'bg-slate-100 text-slate-500' };
+            
+            const azi = new Date();
+            azi.setHours(0,0,0,0);
+            const dataExpirarii = new Date(dataStr);
+            dataExpirarii.setHours(0,0,0,0);
+
+            const diferentaZile = Math.ceil((dataExpirarii - azi) / (1000 * 60 * 60 * 24));
+
+            if(diferentaZile < 0) {
+                return { status: 'expirata', text: '❌ Expirată', cls: 'bg-red-100 text-red-700 font-bold' };
+            } else if(diferentaZile <= 7) {
+                return { status: 'curand', text: `⚠️ Expiră în ${diferentaZile} zile`, cls: 'bg-amber-100 text-amber-800 font-bold animate-pulse' };
+            } else {
+                return { status: 'valabila', text: '✅ Valabilă', cls: 'bg-green-100 text-green-700' };
+            }
+        }
+
+        function actualizeazaTabele() {
+            const tabelCnp = document.getElementById('tabelCnpIndependent');
+            if(tabelCnp) {
+                tabelCnp.innerHTML = listaCnpIndependent.length === 0 ? 
+                    `<tr><td colspan="4" class="py-4 text-center text-slate-400 text-sm">Nicio sportivă adăugată.</td></tr>` :
+                    listaCnpIndependent.map(s => `
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 text-sm">
+                            <td class="py-3 px-4 font-medium">
+                                <input type="text" value="${s.nume}" onchange="actualizeazaCnpVal(${s.id}, 'nume', this.value)" class="border border-slate-300 rounded-lg px-3 py-1 text-sm w-full focus:outline-none focus:border-red-700">
+                            </td>
+                            <td class="py-3 px-4">
+                                <input type="text" value="${s.anNastere || ''}" placeholder="ex: 2014" onchange="actualizeazaCnpVal(${s.id}, 'anNastere', this.value)" class="border border-slate-300 rounded-lg px-3 py-1 text-sm w-28 focus:outline-none focus:border-red-700">
+                            </td>
+                            <td class="py-3 px-4">
+                                <input type="text" value="${s.cnp || ''}" placeholder="ex: 514..." maxlength="13" onchange="actualizeazaCnpVal(${s.id}, 'cnp', this.value)" class="border border-slate-300 rounded-lg px-3 py-1 text-sm w-48 focus:outline-none focus:border-red-700 font-mono">
+                            </td>
+                            <td class="py-3 px-4 text-right">
+                                <button onclick="stergeCnpIndependent(${s.id})" class="text-red-600 text-sm font-medium hover:underline">Șterge</button>
+                            </td>
+                        </tr>`).join('');
+            }
+
+            const containerS = document.getElementById('containereSportiveCategorii');
+            if(containerS) {
+                containerS.innerHTML = grupeDisponibile.map(grupa => {
+                    const fete = sportive.filter(s => s.grupa === grupa);
+                    return `
+                        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+                            <h3 class="text-md font-bold mb-3 text-slate-700 flex items-center gap-2">
+                                <span class="w-3 h-3 bg-red-700 rounded-full"></span> Grupa: ${grupa} (${fete.length} sportive)
+                            </h3>
+                            <table class="w-full text-left border-collapse">
+                                <thead><tr class="border-b border-slate-200 text-slate-500 text-sm"><th class="py-2 px-4">Nume și Prenume</th><th class="py-2 px-4 text-right">Acțiuni</th></tr></thead>
+                                <tbody>
+                                    ${fete.length === 0 ? `<tr><td colspan="2" class="py-4 text-center text-slate-400 text-sm">Nicio sportivă.</td></tr>` : 
+                                      fete.map(s => `<tr class="border-b border-slate-100 hover:bg-slate-50"><td class="py-3 px-4 font-medium">${s.nume}</td><td class="py-3 px-4 text-right"><button onclick="stergeSportiva(${s.id})" class="text-red-600 text-sm font-medium">Șterge</button></td></tr>`).join('')}
+                                </tbody>
+                            </table>
+                        </div>`;
+                }).join('');
+            }
+
+            actualizeazaTabelePrezente();
+
+            const selectDoc = document.getElementById('selectSportivaDoc');
+            if(selectDoc) selectDoc.innerHTML = sportive.map(s => `<option value="${s.id}">${s.nume} (${s.grupa})</option>`).join('');
+
+            const listaDoc = document.getElementById('listaDocumente');
+            if(listaDoc) {
+                listaDoc.innerHTML = documente.map(d => `
+                    <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2"><span class="font-bold">${d.numeSportiva}</span><span class="bg-slate-200 text-xs px-2 py-0.5 rounded">${d.tip}</span></div>
+                            <img src="${d.imagine}" class="w-full h-40 object-cover rounded-lg mb-3 border border-slate-300">
+                        </div>
+                        <button onclick="stergeDocument(${d.id})" class="text-red-600 text-xs font-semibold text-right">Șterge document</button>
+                    </div>`).join('');
+            }
+
+            const tabelLeg = document.getElementById('tabelLegitimatii');
+            if(tabelLeg) {
+                tabelLeg.innerHTML = sportive.map(s => {
+                    const statusAnuala = verificaStatusData(s.vizaAnuala);
+                    const statusMedicala = verificaStatusData(s.vizaMedicala);
+
+                    return `
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 text-sm">
+                            <td class="py-3 px-3 font-medium">${s.nume}</td>
+                            <td class="py-3 px-3"><span class="bg-red-50 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">${s.grupa}</span></td>
+                            <td class="py-3 px-3">
+                                <input type="text" value="${s.serie || ''}" placeholder="ex: BV-123" onchange="actualizeazaSportivaVal(${s.id}, 'serie', this.value)" class="border border-slate-300 rounded-lg px-2 py-1 text-xs w-24 focus:outline-none focus:border-red-700">
+                            </td>
+                            <td class="py-3 px-3">
+                                <input type="date" value="${s.dataEmitere || ''}" onchange="actualizeazaSportivaVal(${s.id}, 'dataEmitere', this.value)" class="border border-slate-300 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-red-700">
+                            </td>
+                            <td class="py-3 px-3">
+                                <input type="date" value="${s.vizaAnuala || ''}" onchange="actualizeazaSportivaVal(${s.id}, 'vizaAnuala', this.value); actualizeazaTabele();" class="border border-slate-300 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-red-700">
+                            </td>
+                            <td class="py-3 px-3">
+                                <input type="date" value="${s.vizaMedicala || ''}" onchange="actualizeazaSportivaVal(${s.id}, 'vizaMedicala', this.value); actualizeazaTabele();" class="border border-slate-300 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-red-700">
+                            </td>
+                            <td class="py-3 px-3 space-y-1">
+                                <div class="text-xs">Anuală: <span class="px-2 py-0.5 rounded text-xs ${statusAnuala.cls}">${statusAnuala.text}</span></div>
+                                <div class="text-xs">Medicală: <span class="px-2 py-0.5 rounded text-xs ${statusMedicala.cls}">${statusMedicala.text}</span></div>
+                            </td>
+                        </tr>`;
+                }).join('');
+            }
+        }
+
+        function actualizeazaTabelePrezente() {
+            const selectData = document.getElementById('selectDataAntrenament');
+            if(!selectData) return;
+            const dataSelectata = selectData.value;
+            const containerP = document.getElementById('containerePrezenteCategorii');
+            if(!containerP) return;
+            
+            containerP.innerHTML = grupeDisponibile.map(grupa => {
+                const fete = sportive.filter(s => s.grupa === grupa);
+                return `
+                    <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+                        <h3 class="text-md font-bold mb-3 text-slate-700 flex items-center gap-2">
+                            <span class="w-3 h-3 bg-red-700 rounded-full"></span> Grupa: ${grupa}
+                        </h3>
+                        <table class="w-full text-left border-collapse">
+                            <thead><tr class="border-b border-slate-200 text-slate-500 text-sm"><th class="py-2 px-4">Nume și Prenume</th><th class="py-2 px-4 text-center">Prezență la antrenament</th></tr></thead>
+                            <tbody>
+                                ${fete.length === 0 ? `<tr><td colspan="2" class="py-4 text-center text-slate-400 text-sm">Nicio sportivă.</td></tr>` : 
+                                  fete.map(s => {
+                                      const ePrezent = (prezenteStoc[dataSelectata] && prezenteStoc[dataSelectata][s.id] !== undefined) ? prezenteStoc[dataSelectata][s.id] : true;
+                                      return `
+                                        <tr class="border-b border-slate-100 hover:bg-slate-50">
+                                            <td class="py-3 px-4 font-medium">${s.nume}</td>
+                                            <td class="py-3 px-4 text-center">
+                                                <input type="checkbox" ${ePrezent ? 'checked' : ''} onchange="schimbaPrezentaStat(${s.id}, '${dataSelectata}', this)" class="w-5 h-5 accent-red-700 cursor-pointer">
+                                            </td>
+                                        </tr>`;
+                                  }).join('')}
+                            </tbody>
+                        </table>
+                    </div>`;
+            }).join('');
+        }
+
+        verificaAutentificareaLaPornire();
+    </script>
+</body>
+</html>
